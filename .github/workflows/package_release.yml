@@ -1,0 +1,32 @@
+name : Test github packages
+on:
+  release:
+    types: [created]
+jobs:
+  first_build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: deployment npm
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - with:
+          node-version: 12
+      - run: npm ci
+      - run: npm test
+
+  package-publish:
+    needs: [first_build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+      - with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - run: npm ci
+      - run : npm publish
+      - env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+      
+    
+    
