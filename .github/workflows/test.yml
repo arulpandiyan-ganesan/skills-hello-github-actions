@@ -1,0 +1,10 @@
+name: Test MyCLI Setup
+
+on:
+  push:
+    branches: 
+      - main
+      - feature/*
+      
+
+  
